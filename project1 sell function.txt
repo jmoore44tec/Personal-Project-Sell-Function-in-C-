@@ -1,0 +1,120 @@
+// Project 1: "When To Sell" - C++ Notification Program
+
+#include <iostream>
+#include <string>
+#include <vector>
+
+using namespace std;
+
+
+	//user input 
+	double purchPrice; //purchase price - the price input by the user when they purchase the stock
+	char response; //yes or no prompt responses
+	int maxStocks = 10; //max stock amount
+	std::vector<std::pair<std::string, double>> userStock; //vector to store stock options (stock name as string, stock price purchased at as a double)
+
+	//stock information
+	double currPrice; //current stock price for specified stock
+	double floorPrice; // floor price - sell when it gets to this threshold AKA "When to sell"
+	double currHold; //current holding - the current state of the stock
+	
+	
+	//function for user input stock info 
+	
+	void myStocks() {
+	
+		for(int i = 0; i < maxStocks; i++) {		//as long as the max number of stocks hasnt been added AND the user chooses to continue the loop will continue to ask for stock names
+		
+			std::cout << "Would you like to enter the name(s) of your current stock holdings? (10 max)" << endl;
+			std::cout << "Y or N?" << endl;
+			std::cin >> response;
+		
+			if(response == 'y' || 'Y') {
+				std::string stockName;
+				double stockPrice;
+				std::cout << "Enter your stock name: ";
+				std::cin >> stockName;
+				std::cout << "Enter the stock price: ";
+				std::cin >> stockPrice;
+				userStock.push_back(std::make_pair(stockName, stockPrice));
+			
+			} else if(response == 'n' || 'N') {
+				break;
+			} else  {
+				std::cout << "Invalid input, please try again. (Enter Y or N)" << endl;
+				--i; //ensure iteration count isn't increased
+		}
+		
+		std::cout << "Your stock options include: ";
+		for(const int& stonks : userStock) {
+			std::cout << userStock << " ";
+		}
+		std::cout << std::end;
+
+		return 0; 
+	}
+	
+
+	
+	//notification function
+	void notiProg() {
+	if(currPrice < floorPrice) {
+		std::cout << "Stock has dropped below acceptable threshold, please consider selling." << endl;
+		std::cout << "Current Price: " << currPrice << endl; 
+		std::cout << "Purchased At: " << purchPrice << endl;
+		std::cout << "Would you like to sell?" << endl;
+
+		std::cin >> response;
+		if(response == 'y' || 'Y') {
+			//call sell function
+			std::cout << "Thank you, your stock will be sold as soon as possible!" << endl;
+
+		} else if(response == 'n' || 'N') {
+			std::cout << "Thank you, your stock will not be sold at this time. Please continue to monitor your stock!" << endl;
+		} else  {
+				std::cout << "Invalid input, please try again. (Enter Y or N)" << endl;
+		}
+	} else if(currPrice == floorPrice) {
+		std::cout << "Stock has reached set floor price, would you like to sell?" << endl;
+		std::cout << "Y or N" << endl;
+		
+		std::cin >> response;
+		
+		if(response == 'y' || 'Y') {
+			//call sell function
+			std::cout << "Thank you, your stock will be sold as soon as possible!" << endl;
+			
+
+		} else if(response == 'n' || 'N') {
+			cout << "Thank you, your stock will not be sold at this time. Please continue to monitor your stock!" << endl;
+		} else  {
+				std::cout << "Invalid input, please try again. (Enter Y or N)" << endl;
+		}
+	}		
+
+int main()
+{
+	std::cout << "Welcome!" << endl;
+	std::cout << "How can I help you today?"
+	std::cout << "Please make a selection..." << endl;
+	std::cout << "Edit My Portfolio (Enter 1)\n"
+			"View My Stock Options (Enter 2)\n"
+			"Recommended Actions (Enter 3)" << endl;
+		
+	switch() {
+		case 1:
+			std::cout << "Edit My Portfolio - 1"
+			myStocks();
+			break;
+		
+		case 2:
+			std::cout << "View My Stock Options - 2";
+			std::cout << userStock;
+			break;
+		
+		case 3: 
+			std::cout << "Recommended Actions - 3";
+			notiProg();
+			break;
+
+}		
